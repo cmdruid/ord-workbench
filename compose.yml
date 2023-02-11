@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  ord-bitcoin:
+    build: .
+    image: ord-bitcoin:latest
+    container_name: ord-bitcoin
+    hostname: ord-bitcoin
+    env_file: .env
+    init: true
+    networks:
+      - net
+    ports:
+      - 18443:18443
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - ./config:/config:ro
+      - ./data:/root/.bitcoin:rw
+      - ./home:/root/home:rw
+
+networks:
+  net:
+    name: 'bitcoin'
