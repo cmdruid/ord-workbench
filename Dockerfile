@@ -12,12 +12,12 @@ RUN apt-get update && apt-get install -y \
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 ## Copy over binaries.
-COPY build/out/* /tmp/bin/
+COPY build/out /tmp/bin/
 
 WORKDIR /tmp
 
 ## Unpack and/or install binaries.
-RUN for file in /tmp/bin/*; do \
+RUN for file in /tmp/bin; do \
   if ! [ -z "$(echo $file | grep .tar.)" ]; then \
     echo "Unpacking $file to /usr ..." \
     && tar --wildcards --strip-components=1 -C /usr -xf $file \
