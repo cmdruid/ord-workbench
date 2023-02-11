@@ -1,3 +1,4 @@
 data
 .env
 build/out/*
+image
