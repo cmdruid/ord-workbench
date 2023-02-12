@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "@stdlib/datasets-female-first-names-en": "^0.0.9",
+    "@stdlib/datasets-male-first-names-en": "^0.0.9",
+    "an-array-of-english-words": "^2.0.0",
+    "an-array-of-french-words": "^2.0.0",
+    "an-array-of-spanish-words": "^2.0.0",
+    "bip39": "^3.0.4",
+    "mathjs": "^11.5.1",
+    "us-baby-names-2": "^1.0.2",
+    "word-list": "^3.1.0",
+    "words": "^0.1.4"
+  }
+}
