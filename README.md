@@ -42,7 +42,10 @@ README.md    # You are here!
 
 ## How to Use
 ```sh
-## Build the image and start in a container.
+## Build any required binaries.
+cd build && ./build.sh dockerfiles/{binaryname}.dockerfile
+
+## Build the main image and start in a container.
 docker compose up --build
 
 ## Start the container in detached mode.

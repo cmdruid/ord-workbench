@@ -1,4 +1,6 @@
 data
 .env
 build/out/*
-image
+!build/out/.gitkeep
+image/*
+!image/.gitkeep

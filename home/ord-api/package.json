@@ -1,0 +1,23 @@
+{
+  "name": "lookup-api",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "load": "node --loader ts-node/esm --no-warnings",
+    "start": "yarn load src/app.ts",
+    "scratch": "yarn load test/scratch.ts"
+  },
+  "dependencies": {
+    "@noble/secp256k1": "^1.7.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.13.0",
+    "@types/wif": "^2.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  }
+}
