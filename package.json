@@ -1,0 +1,25 @@
+{
+  "scripts": {
+    "start:ordwebtest": "cd ons && echo 'open http://localhost:8080/test-ons-page.html' && http-server"
+  },
+  "dependencies": {
+    "@stdlib/datasets-female-first-names-en": "^0.0.9",
+    "@stdlib/datasets-male-first-names-en": "^0.0.9",
+    "an-array-of-english-words": "^2.0.0",
+    "an-array-of-french-words": "^2.0.0",
+    "an-array-of-spanish-words": "^2.0.0",
+    "bip39": "^3.0.4",
+    "mathjs": "^11.5.1",
+    "native-dns-packet": "^0.1.1",
+    "rc": "^1.2.8",
+    "us-baby-names-2": "^1.0.2",
+    "wildcard2": "^0.0.2",
+    "word-list": "^3.1.0",
+    "words": "^0.1.4"
+  },
+  "devDependencies": {
+    "debug": "^4.3.4",
+    "http-server": "^14.1.1",
+    "pkg": "^5.8.0"
+  }
+}

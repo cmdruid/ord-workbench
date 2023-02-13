@@ -11,7 +11,7 @@ services:
     networks:
       - net
     ports:
-      - 18443:18443
+      - 3069:80
     restart: unless-stopped
     tty: true
     volumes:
