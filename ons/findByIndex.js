@@ -10,7 +10,11 @@ function getMashupWord(words, n) {
     word2Index++;
     }
     let num = n % 100;
-    return words[word1Index] + words[word2Index] + num.toString().padStart(2, '0');
+    let word1 = words[word1Index]
+    let word2 = words[word2Index]
+    let numStr = num.toString().padStart(2, '0');
+    if (!word1 || !word2) return "doesn't exist"
+    return  `${word1}${word2}${numStr}`;
 }
 
 const satsIndex = process.argv[2]

@@ -5,7 +5,10 @@ const words = data.split('\n');
 
 function getIndexByWordsAndNum(words, word1, word2, num) {
   let word1Index = words.indexOf(word1);
+  if (word1Index === -1) return "doesn't exist"
   let word2Index = words.indexOf(word2);
+  if (word2Index === -1) return "doesn't exist"
+
   if (word1Index > word2Index) {
       word2Index--;
   }
