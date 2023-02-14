@@ -10,6 +10,7 @@
     "scratch": "yarn load test/scratch.ts"
   },
   "dependencies": {
+    "@cmdcode/buff-utils": "^1.2.2",
     "@noble/secp256k1": "^1.7.1",
     "express": "^4.18.2"
   },

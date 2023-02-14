@@ -1,7 +1,8 @@
 import { Request, Response, Router } from 'express'
 
 import { 
-  getOrdinalsFromAddr, 
+  getOrdinalsFromAddr,
+  getOrdinalsFromRange,
   getOrdinalsFromUTXO 
 } from '../controller/ord.js'
 
@@ -12,10 +13,25 @@ route.get('/fromUTXO', async (req: Request, res: Response) => {
 
   if (
     typeof txid === 'string' &&
-    typeof Number(vout) === 'number'
+    (typeof vout === 'string' || typeof vout === 'number')   
   ) {
-    const ret = await getOrdinalsFromUTXO(txid, Number(vout))
-    return res.status(200).json(ret)
+    const { ok, data } = await getOrdinalsFromUTXO(txid, Number(vout))
+    return res.status(200).json({ ok, data })
+  }
+  return res.status(400).send('Invalid data: ' + JSON.stringify(req.query))
+})
+
+route.get('/fromRange', async (req: Request, res: Response) => {
+  let { start, stop } = req.query
+
+  if (stop === undefined) stop = start
+
+  if (
+    (typeof start === 'string' || typeof start === 'number') &&
+    (typeof stop  === 'string' || typeof start === 'number')
+  ) {
+    const { ok, data } = await getOrdinalsFromRange(Number(start), Number(stop))
+    return res.status(200).json({ ok, data })
   }
   return res.status(400).send('Invalid data: ' + JSON.stringify(req.query))
 })

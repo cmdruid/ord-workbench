@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@cmdcode/buff-utils@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@cmdcode/buff-utils/-/buff-utils-1.2.2.tgz#cf9c8494f82e9be88304709be4a5cb6a8c49ca86"
+  integrity sha512-Kuhng/a+WhXWKldRBw8KMt2hmLqeM1wJHLSCgW8w7ml406MXg+4JSPCNln5zMwWjdKO2osEGygLLbosynHGRTg==
+
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz#00629c35a688e05a88b1cda684fb9d5e73f000a1"

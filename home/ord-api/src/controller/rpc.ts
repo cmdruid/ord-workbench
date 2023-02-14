@@ -6,21 +6,27 @@ interface RpcConfig {
   wallet ?: string
   host   ?: string
   port   ?: number
+  bypass ?: boolean
 }
 
 const DEFAULT_CONFIG = {
   user : 'bitcoin',    // RPC-Auth Username
   pass : 'regtest',    // RPC-Auth Password
   host : '127.0.0.1',  // URL to your Bitcoin node.
-  port : 18443         // Port to your RPC interface.
+  port : 18443,        // Port to your RPC interface.
+  wallet : 'master'
 }
 
+const WHITELIST = [ 'listwallets', 'listwalletdir', 'createwallet', 'loadwallet' ]
+
 export default async function rpc(
-  method : string, 
-  args   : any[] = [], 
-  config : RpcConfig = DEFAULT_CONFIG
+  method  : string, 
+  args    : any[] = [], 
+  config ?: RpcConfig
 ) {
   /** Send a JSON-RPC call to the configured server. */
+
+  config = { ...DEFAULT_CONFIG, ...config }
 
   // Random identifer for our request.
   const requestId = crypto.randomUUID()
@@ -34,11 +40,11 @@ export default async function rpc(
   try {
     let wallet = ''
 
-    if (config.wallet) {
+    if (config.wallet && !WHITELIST.includes(method)) {
       // If a wallet is specified, ensure that the wallet file
       // exists and is loaded, then configure the url endpoint.
       await checkWallet(config.wallet)
-      wallet = 'wallet/' + config.wallet
+      wallet = '/wallet/' + config.wallet
     }
 
     // Confgigure our request object.
@@ -57,11 +63,12 @@ export default async function rpc(
     }
 
     // Fetch a response from our node.
-    const fullurl  = `http://${config.host}:${config.port}/${wallet}`
+    const fullurl  = `http://${config.host}:${config.port}${wallet}`
     const response = await fetch(fullurl, request)
 
     // If the response fails, throw an error.
     if (!response.ok) {
+      console.log('URL:', fullurl)
       console.log('Request:', request)
       throw `Request for '${method}' failed with status ${response.status}: ${response.statusText}`
     }
@@ -80,7 +87,10 @@ export default async function rpc(
 
     return result
 
-  } catch (err) { throw err }
+  } catch (err) { 
+    console.log(err)
+    throw err 
+  }
 }
 
 async function isWalletLoaded(
@@ -89,7 +99,7 @@ async function isWalletLoaded(
   /** Check if the specified wallet is loaded
    *  within the bitcoin-core node.
    * */
-  return rpc('listwallets')
+  return rpc('listwallets', [])
     .then((wallets) => Array.isArray(wallets) && wallets.includes(walletName))
 }
 
@@ -108,14 +118,14 @@ async function checkWallet(walletName : string) : Promise<void> {
    *  the bitcoin-core node and available to access.
    * */
 
+  if (!(await doesWalletExist(walletName))) {
+    // If wallet does not exist, create it.
+    await rpc('createwallet', [ walletName ])
+  }
+
   if (await isWalletLoaded(walletName)) {
     // If wallet is already loaded, return.
     return
-  }
-
-  if (!(await doesWalletExist(walletName))) {
-    // If wallet does not exist, throw error.
-    throw 'Wallet file does not exist!'
   }
 
   return rpc('loadwallet', [ walletName ])
